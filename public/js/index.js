@@ -3,7 +3,7 @@ var expand = document.querySelectorAll("span.expand")
 
 for(var i = 0; i < expand.length; i++){
 	let x = [i]
-	document.querySelectorAll("div.main-message-box")[i].onclick = function(){
+	document.querySelectorAll("span.expand")[i].onclick = function(){
 		expandMe(x);
 	}
 }

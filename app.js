@@ -282,27 +282,19 @@ app.get("/messages", nocache, function(req, res){
   }
 });
 
-app.post("/messages", nocache, function(req, res){
-  console.log(req.body.fromMsgId);
+app.post("/messages", function(req, res){
   if(req.isAuthenticated()){
     User.findOneAndUpdate({_id: req.body.sendTo}, {$push: {messages: {from: {name: req.body.senderName, id: req.body.senderId}, subject: req.body.subject, message: req.body.message, date: newDate(), isRead: false}}}, function(err, user){
-      if(err){
-        console.log(err);
-      } else {
-          User.find({isAdmin: true}, function(err, users){
-            if(err){
-              console.log(err)
-            } else {
-              res.render("messages", {username: req.user.username, userId: req.user._id, messages: req.user.messages, foundUsers: users});
-            }
-          });
-        }
-    });
+      User.findOneAndUpdate({"messages._id": req.body.markRead}, {"$set": {"messages.$.isRead": true}}, function(err, user){
+        User.find({isAdmin: true}, function(err, users){
+          res.redirect("/messages");
+        })
+      });
+    }); 
   } else {
     res.redirect("/");
   }
-})
-
+}); 
 app.post("/markAsRead", nocache, function(req, res){
   if(req.isAuthenticated()){
     User.findOneAndUpdate({"messages._id": req.body.markRead}, {"$set": {"messages.$.isRead": true}}, function(err){
