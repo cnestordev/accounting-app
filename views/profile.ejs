@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito|Prata&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/styles3.css">
+	<title>My Profile:</title>
+</head>
+<body>
+	<div class="container">
+		<nav>
+	        <ul>
+	            <li><button class="nav-buttons" id="button-1"><a href="/user">HOME</a></button></li>
+	            <li><button class="nav-buttons" id="button-2"><a href="/logout">LOG OUT</a></button></li>
+	        </ul>
+	    </nav>
+		<div>
+			<div class="profile-box">
+				<p><span class="account-key">Name:</span><span> <%=user.firstName%> </span></p>
+				<p><span class="account-key">Account Id:</span><span> <%=user._id%> </span></p>
+				<p><span class="account-key">Password:</span><a href="/change-password">Change password.</a></p>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

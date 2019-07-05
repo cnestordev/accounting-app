@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="script.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Nunito|Prata&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/styles.css">
+	<title>Welcome!</title>
+</head>
+<body>
+		<div class="signInBox">
+				<p class="signInText">Welcome, please sign up</p>
+				<form action="/signup" method="POST" id="theForm" autocomplete="off">
+					<input type="text" minlength="3" maxlength="16" name="firstName" id="firstName" placeholder="First Name" autocomplete="off" required>
+					<input type="text" minlength="3" maxlength="12" name="username" id="username" autocomplete="off" placeholder="username" oninput="colorUsername()" required>
+					<input type="password" minlength="3" maxlength="19" name="password" id="password" placeholder="password" oninput="colorPassword()" required>
+					<select name="question" id="question-field" required>
+						<option value="">Choose a security question:</option>
+  						<option value="question1">What is your dream vacation?</option>
+  						<option value="question2">What is your dream car?</option>
+					</select>
+					<input type="text" name="answer" placeholder="Your answer" minlength="3" maxlength="15" autocomplete="off" required>
+
+						<% if(exists === true){ %>
+							<span id="errorMessage">
+								<%= "USERNAME ALREADY IN USE, TRY AGAIN" %>
+							</span>
+						<% } %>
+					
+						<% if(created === true){ %>
+							<span id="successMessage">
+								<%= "ACCOUNT WAS SUCCESSFULLY CREATED" %>
+							</span>
+						<% } %>
+
+					<p class="newUserLink">Already have an account? <a href="http://localhost:3000/">Sign in</a></p>
+					<button class="signInButton">Sign up</button>
+				</form>
+		</div>
+</body>
+</html>

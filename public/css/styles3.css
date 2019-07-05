@@ -1,0 +1,474 @@
+body {
+	font-family: 'Nunito';
+	/*background-image: url("https://imagizer.imageshack.com/img921/8729/Ia1vVY.jpg");*/
+	background-color: #e2e2e2;
+	background-size: cover;
+}
+
+body::after {
+	content: "";
+	background-color: white;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	opacity: 0.25;
+	z-index: -1;
+}
+
+.box {
+	position: relative;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+nav {
+	text-align: right;
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 15px;
+	margin-top: 5px;
+	border-bottom: 2px solid #fff;
+}
+
+.nav-buttons {
+	border: 1px solid transparent;
+	background: #fff;
+	padding: 1px;
+	border-radius: 7px;
+}
+
+#button-1 {
+	border:2px solid #;
+	background: #3162a5;
+}
+
+#button-2 {
+	border: 2px solid #ff4e4e;
+	background: #ff4e4e;
+}
+
+#button-1:hover {
+	background: #29528E;
+}
+
+#button-2:hover {
+	background: #e84747;
+}
+
+
+nav li {
+	display: inline;
+	margin: 0 10px;
+}
+
+nav a:not(#message-link) {
+	text-decoration: none;
+	box-sizing: border-box;
+	font-size: 0.9rem;
+	color: #fff;
+	padding: 6px;
+}
+
+a#message-link {
+	color: #fff;
+}
+
+.msgCount {
+	font-size: 0.80em;
+}
+
+nav a:hover {
+	color: #fff;
+	transition: 0.25s;
+	box-sizing: border-box;
+}
+
+.fa-envelope {
+	font-size: 0.8rem;
+}
+
+.main-box {
+	background: red;
+	height: max-content;
+	width: 100%
+}
+
+.col-main {
+	color: #fff;
+	padding: 15px;
+	margin: 5px;
+	border-right: 3px solid #fff;
+}
+
+.col-main:last-of-type {
+	border: none;
+}
+
+.col-content {
+	padding: 15px;
+	margin: 5px;
+}
+
+
+.col-content:hover {
+	border-color: #000;
+	background-color: #e8eef2;
+}
+
+.row {
+	clear:both;
+	border-bottom: 1px solid rgba(52, 52, 52, 0.3);
+	border-left: 1px solid rgba(52, 52, 52, 0.3);
+	border-right: 1px solid rgba(52, 52, 52, 0.3);
+	background-color: rgba(250, 250, 250, 1.0);
+}
+
+.row:last-of-type {
+	border-bottom-right-radius: 7px;
+	border-bottom-left-radius: 7px;
+	box-shadow: 0px 10px 5px -12px rgba(0,0,0,0.75);
+}
+
+#row-main {
+	background-color: #245eb5;
+	border-top-right-radius: 7px;
+	border-top-left-radius: 7px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+details summary::-webkit-details-marker {
+  display:none;
+}
+/*This hides arrows in Firefox*/
+details > summary {
+	display:block
+}
+
+.welcomeText {
+	font-size: 1.2rem;
+	font-family: 'Prata', serif;
+	color: #333;
+}
+
+.welcome-space {
+	margin-bottom: 25px;
+}
+
+.balanceText {
+	font-size: 1.3rem;
+	float: right;
+	margin-bottom: 10px;
+	font-family: 'Nunito';
+	color: #333;
+	padding: 8px;
+	background: #fff;
+	border-radius: 7px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.delete-button {
+	margin: 10px 0;
+	border: 1px solid #ff6e2b;
+	border-radius: 4px;
+	padding: 7px;
+	background: rgba(255, 110, 43, 0.7);
+	color: #fff;
+}
+
+.form-box {
+	background: rgba(250, 250, 250, 0.8);
+	margin: 10px 0;
+	padding: 10px;
+}
+
+.form-box button {
+	border: 2px solid transparent;
+	padding: 5px;
+	background: #D3D3D3;
+}
+
+#memo, #amount {
+	background: transparent;
+	border: 2px solid #686868;
+}
+
+.delete-box {
+	position: relative;
+	left: 50%;
+	margin-bottom: 10px;
+}
+
+#delete-account {
+	border: 2px solid #FF4E4E;
+	border-radius: 4px;
+	padding: 8px;
+	background: rgba(255, 78, 78, 0.8);
+}
+
+.admin-box {
+	background: rgba(255, 255, 255, 0.5);
+	display: inline-block;
+	text-align: center;
+	position: relative;
+	padding: 15px;
+	left: 50%;
+}
+
+.admin-box button {
+	border: 1px solid #fff;
+	padding: 5px;
+	border-radius: 5px;
+	background: #333;
+	color: #fff;
+}
+
+.accounts-dropdown {
+	margin-bottom: 10px;
+}
+
+fieldset {
+    border: 1px solid #fff !important;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, .2);
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 20px 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+    box-shadow:  0px 0px 0px 0px #000;
+}
+
+legend {
+    background: rgba(255, 255, 255, .5);
+	font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width:auto;
+    padding:0 10px;
+    border: 1px solid #fff;
+    color: #000;
+}
+//***********************ACCOUNT PAGE***************************************************************/
+
+
+
+
+
+/*************************PROFILE SECTION**********************************/
+
+.profile-box {
+	border: 1px solid #fff;
+	border-radius: 5px;
+	margin: 10% auto 0 auto;
+	width: 35%;
+	padding: 1%;
+	background: rgba(255, 255, 255, 0.8);
+	font-family: 'Nunito';
+	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
+.account-key {
+	font-weight: bold;
+	margin-right: 3px;
+}
+
+/**************************CHANGE PASSWORD SECTION ********************************/
+
+
+.password-box {
+	border: 1px solid #fff;
+	border-radius: 5px;
+	margin: 10% auto 0 auto;
+	width: 40%;
+	padding: 1%;
+	background: rgba(255, 255, 255, 0.8);
+	font-family: 'Nunito';
+	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+	justify-content: center;
+}
+
+.password-box button {
+	border: 2px solid #34d374;
+	border-radius: 2px;
+	background: transparent;
+	display: block;
+	margin: 10px auto 0 auto;
+}
+
+.password-box button:hover {
+	background: #34d374;
+	color: #fff;
+}
+
+.password-feedback {
+	border: 1px solid #fff;
+	background: #fff;
+	border-radius: 5px;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 5px;
+	animation: shake 0.25s;
+	position: relative;
+	animation-iteration-count: 3;
+}
+
+@keyframes shake {
+  0% { left: 0; }
+  33% { left: -5px; }
+  66% { left: 0; }
+  100% { left: 5px; }
+ 
+}
+
+label {
+	padding-bottom: 7px;
+}
+
+.form-password {
+	justify-content: center;
+	text-align: center;
+}
+
+/*****************************forgot password****************************************/
+
+.authFailed {
+	color: #f5425a;
+	font-size: .8rem;
+	padding: 7px;
+	animation: shake 0.25s;
+	position: relative;
+	animation-iteration-count: 3;
+}
+
+@keyframes shake {
+  0% { left: 0; }
+  33% { left: -5px; }
+  66% { left: 0; }
+  100% { left: 5px; }
+ 
+}
+
+
+/*****************************success page *****************************************/
+
+.success-box {
+	border: 1px solid #000;
+	border-top-color: #245eb5;
+	border-top-width: 5px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	background: #fff;
+	width: 15%;
+	margin: 0 auto;
+	margin-top: 10%;
+	text-align: center;
+	padding: 1%;
+}
+
+.success-box button {
+	border: 1px solid #000;
+	border-radius: 2px;
+	background: transparent;
+	box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.15);
+}
+
+.success-box button:hover {
+	background: #efefef;
+}
+
+.success-box a {
+	color: #000;
+}
+
+/***************************************MESSAGES PAGE ******************************************/
+
+.messages-box-read {
+	border: 1px solid #000;
+	background: green;
+	margin: 15px auto;
+}
+
+.messages-box-unread {
+	background: red;
+	border: 1px solid #000;
+	margin: 15px auto;
+}
+
+.main-message-box {
+	border: 1px solid #000;
+	border-radius: 5px;
+	display: block;
+	width: 40%;
+	background: #fff;
+	margin: 15px auto;
+	padding: 10px 10px 0 10px;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.true {
+	border: none;
+}
+
+.false {
+	border: 2px solid #29528E;
+}
+
+.main-message-body {
+	transition: all 0.4s ease-in-out;
+	height: auto;
+	position: relative;
+}
+
+.message-content-text {
+	font-family: 'Nunito';
+	position: relative;
+}
+
+#read-message {
+	text-align: center;
+	font-size: 0.8rem;
+}
+
+hr {
+	width: 2rem;
+	border-bottom: 5px dotted #000;
+	margin-top: 2px;
+}
+
+.message-from-text {
+	display: inline;
+}
+
+.mark-read-box {
+	float: right;
+	margin: 2px 5px;
+}
+
+.input {
+	margin-bottom: 1rem;
+}
+
+.cut {
+  height: 2.5rem;
+}
+
+
+.show {
+	display: none;
+}
+
+.overlay {
+  	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
+	height: 2.5rem;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 5;
+}

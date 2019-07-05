@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <script src="https://kit.fontawesome.com/58ff903b9e.js"></script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+      <link href="https://fonts.googleapis.com/css?family=Nunito|Prata&display=swap" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="/css/styles3.css">
+      <title>My Account</title>
+   </head>
+   <body>
+      <% var totalBal = 0 %>
+      <div class="container">
+
+        <% function checkUnread(){ %>
+          <% let msgCount = 0 %>
+          <% for(var i = 0; i < messageArray.length; i++){ %>
+            <% if(messageArray[i].isRead === false){ %>
+              <% msgCount++ %>
+            <% } %>
+          <% } %>
+            <% if(msgCount > 0){ %>
+          <% return msgCount; %>
+          <% } else { %>
+            <% let msgCount = null; %>
+            <% return msgCount; %>
+        <% } %>
+       <% } %>
+
+       <% checkUnread() %>
+
+       <% let unread = checkUnread() %>
+
+         <nav>
+            <ul>
+               <li><button class="nav-buttons" id="button-1"><a href="/myprofile">My Account</a></button></li>
+              <% if(unread){ %>
+                 <li><button class="nav-buttons" id="button-2"><a href="/messages" id="message-link">Messages <i class="far fa-envelope"></i><span class="msgCount"><%=" " + unread%></span></i></a></button></li>
+               <% } else { %>
+                    <li><button class="nav-buttons" id="button-2"><a href="/messages" id="message-link">Messages<span class="msgCount"><%=unread%></span></i></a></button></li>
+                 <% } %>
+
+
+
+
+
+               <li><button class="nav-buttons" id="button-2"><a href="/logout">LOG OUT</a></button></li>
+            </ul>
+         </nav>
+         <div class="box">
+            <div class="welcome-space">
+               <span class="welcomeText">Welcome to your account, <%= foundName %></span>
+            </div>
+            <% if(foundAmin || adminForm){ %>
+            <div>
+               <form action="/adminUser" method="POST">
+                  <select name="Accounts" class="accounts-dropdown" onchange="this.form.submit()">
+                     <option selected="true" disabled="disabled">Account</option>
+                     <% for(var y = 0; y < foundUsers.length; y++){ %>
+                     <option value=<%=foundUsers[y]._id%>><%=foundUsers[y].username%></option>
+                     <% } %>
+                  </select>
+               </form>
+            </div>
+            <% } %>
+              <div class="row row-main" id="row-main">
+                 <div class="col col-main">Type:</div>
+                 <div class="col col-main">Memo:</div>
+                 <div class="col col-main">Amount:</div>
+                 <div class="col col-main">Balance:</div>
+              </div>
+              <form action="/deleteItem" method="POST">
+                 <% for(var i = 0; i < foundItem.length; i++){ %>
+                 <div class="row">
+                    <div class="col col-content">
+                       <details>
+                          <summary>
+                             <%= foundItem[i].type %>
+                          </summary>
+                          <%= foundItem[i].dateAdded %>
+                          <% if(foundAmin || adminForm){ %>
+                          <input type="checkbox" name="deleteItem" value=<%=foundItem[i]._id%>>
+                          <% } %>
+                       </details>
+                    </div>
+                    <div class="col col-content">
+                       <%= foundItem[i].memo %>
+                    </div>
+                    <div class="col col-content">
+                       <% if(foundItem[i].type === "debit"){ %>
+                       $<%= foundItem[i].amount %>
+                       <% } else { %>
+                       ($<%= foundItem[i].amount %>)
+                       <% } %>
+                    </div>
+                    <div class="col col-content">
+                       <% if(foundItem[i].type === "debit"){ %>
+                       $<% totalBal = totalBal + foundItem[ i].amount %>
+                       <%= totalBal.toFixed(2) %>
+                       <% } else { %>
+                       <% totalBal = totalBal - foundItem[i].amount %>
+                       <%= totalBal.toFixed(2) %> 
+                       <% } %>
+                    </div>
+                 </div>
+               <% } %>
+               <input type="hidden" name="name" value=<%=foundId%>>
+               <% if(foundAmin || adminForm){ %>
+
+            <fieldset>
+              <legend>
+                Admin Tools
+              </legend>
+               <button class="delete-button">Delete Items</button>
+               <% } %>
+            </form>
+
+              <% if(foundAmin || adminForm){ %>
+            <div class="form-box">
+              <form action="/accountData" method="POST">
+                 <select name="type">
+                    <option value="debit">Debit</option>
+                    <option value="credit">Credit</option>
+                 </select>
+                 <input type="text" name="memo" id="memo" placeholder="name of transaction" autocomplete="off" required>
+                 <input type="number" name="amount" id="amount"  autocomplete="off" placeholder="charge amount" min="-10000.00" max="10000.00" step="0.01" required>
+                 <input type="hidden" name="UserId" value=<%= foundId._id %>>
+                 <input type="hidden" name="adminId" value=>
+                 <button type="submit">Submit</button>
+              </form>
+            </div>
+
+              <div class="delete-box">
+                <form action="/deleteAccount" method="POST" id="deleteForm">
+                   <input type="hidden" id="delete1" name="delete" value=<%= foundId._id %>>
+                   <button type="submit" id="delete-account" onclick="return confirm('Are you sure you want to delete <%=foundName%> account?');">Delete Account</button>
+                </form>
+              </div>
+
+            <div class="admin-box">
+              <form action="/makeAdmin" method="POST">
+                  <p>Admin: <%= foundAmin %></p>
+                  <hr>
+                 <input type="checkbox" name="makeAdmin" value="true">Make Admin?<br>
+                 <input type="hidden" name="UserId" value=<%= foundId._id %>>
+                 <button type="submit">ADMIN</button>
+              </form>
+          </div>
+            <% } %>
+          </fieldset>
+            <span class="balanceText">Your balance: <span class="totalBalText"> $<%= totalBal.toFixed(2) %></span>
+         </div>
+      </div>
+
+   </body>
+</html>

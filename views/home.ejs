@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Nunito|Prata&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/styles.css">
+	<title>Welcome</title>
+</head>
+<body>
+	<div class="signInBox">
+			<p class="welcomeText">Welcome back, please sign in</p>
+		<div>
+			<form action="/" method="post">
+				<input type="text" name="username" id="username" placeholder="username" autocomplete="off" required>
+				<input type="password" name="password" id="password" placeholder="password" required>
+				
+					<% if(failedAttempt === true){ %>
+						<span id="loginAttempt">
+							<%= "INCORRECT LOGIN CREDENTIALS, TRY AGAIN" %>
+						</span>
+					<% } %>
+				
+				<p class="forgotText">Forgot Passowrd? <a href="/verify-user"> Reset here</a></p>
+				<button type="submit" class="SignInButton">Sign In</button>
+				<span>
+					<p class="newUserLink">New? <a href="http://localhost:3000/signup">Sign up</a></p>
+				</span>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
