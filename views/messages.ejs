@@ -41,18 +41,20 @@
             <div class="main-message-box <%=messages[i].isRead%>">
                 <div class="main-message-header">
                     <p class="message-from-text">
-                        From: <%= messages[i].from.name %>
+                        <%= messages[i].from.name %>
                     </p>
                     <% if(messages[i].isRead === false){ %>
                         <span>
                           <form action="/markAsRead" method="POST">
                             <input type="hidden" name="userId" value=<%=userId%>>
-                            <label>Mark as read</label>
+                            <label class="checkbox-container">Mark as read
                             <input type="checkbox" name="markRead" class="mark-read-box" onChange="this.form.submit()" value=<%=messages[i]._id%>>
+                            <span class="checkmark"></span>
+                            </label>
                           </form>
                         </span>
                     <% } %>
-                    <p>
+                    <p class="message-date-text">
                         Date: <%= messages[i].date %>
                     </p>
                     <span>
@@ -77,6 +79,7 @@
                             <input type="hidden" name="senderId" value=<%=userId%>>
                             <input type="hidden" name="subject" value=<%= messages[i].subject %>>
                             <input type="hidden" name="senderName" value=<%=username%>>
+                            <input type="hidden" name="fromMsgId" value=<%=messages[i]._id%>>
                             <button>Reply</button>
                         </form>
                     </div>

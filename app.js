@@ -283,7 +283,7 @@ app.get("/messages", nocache, function(req, res){
 });
 
 app.post("/messages", nocache, function(req, res){
-  console.log(req.body.subject);
+  console.log(req.body.fromMsgId);
   if(req.isAuthenticated()){
     User.findOneAndUpdate({_id: req.body.sendTo}, {$push: {messages: {from: {name: req.body.senderName, id: req.body.senderId}, subject: req.body.subject, message: req.body.message, date: newDate(), isRead: false}}}, function(err, user){
       if(err){

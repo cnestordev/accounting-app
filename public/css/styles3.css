@@ -419,6 +419,10 @@ label {
 	border: 2px solid #29528E;
 }
 
+.main-message-header {
+	position: relative;
+}
+
 .main-message-body {
 	transition: all 0.4s ease-in-out;
 	height: auto;
@@ -433,6 +437,7 @@ label {
 #read-message {
 	text-align: center;
 	font-size: 0.8rem;
+	margin-top: 1.1rem;
 }
 
 hr {
@@ -442,7 +447,16 @@ hr {
 }
 
 .message-from-text {
+	font-weight: bold;
+	font-size: 1.2rem;
 	display: inline;
+	position: absolute;
+	right: 45%;
+}
+
+.message-date-text {
+	font-size: 0.85rem;
+	color: rgba(0, 0, 0, 0.5);
 }
 
 .mark-read-box {
@@ -472,3 +486,58 @@ hr {
 	left: 0;
 	z-index: 5;
 }
+
+.checkbox-container {
+	display: block;
+  	position: relative;
+  	padding-left: 25px;
+  	margin-bottom: 2px;
+  	cursor: pointer;
+  	font-size: 0.8rem;
+  	-webkit-user-select: none;
+  	-moz-user-select: none;
+  	-ms-user-select: none;
+  	user-select: none;
+}
+
+.checkbox-container input {
+	position: absolute;
+  	opacity: 0;
+  	cursor: pointer;
+  	height: 0;
+  	width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  border: 1px solid #000;
+  border-radius: 50px;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: white;
+}
+
+
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #29528e;
+}
+
+
+
+/* Style the checkmark/indicator */
+/*.checkbox-container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}*/
