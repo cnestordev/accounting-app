@@ -253,7 +253,7 @@ legend {
     border: 1px solid #fff;
     color: #000;
 }
-//***********************ACCOUNT PAGE***************************************************************/
+/***********************ACCOUNT PAGE***************************************************************/
 
 
 
@@ -387,9 +387,79 @@ label {
 
 /***************************************MESSAGES PAGE ******************************************/
 
+.compose-box, .compose-button {
+  padding: 5px;
+  text-align: center;
+  background-color: #fff;
+  border: solid 1px transparent;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.compose-box {
+  padding: 5px;
+  padding-bottom: 15px;
+  display: none;
+}
+
+.icon-background1 {
+    color: #29528e;
+}
+
+.fa-plus {
+	color: #fff;
+	cursor: pointer;
+}
+
+.to-text {
+	display: inline;
+}
+
+.subject-input {
+	display: block;
+	margin: 5px auto;
+	border: 1px solid #000;
+	border-radius: 5px;
+	background: transparent;
+	padding: 5px;
+}
+
+.subject-input::placeholder {
+	text-align: center;
+	font-family: 'Nunito';
+}
+
+.compose-body {
+	border: 1px solid #000;
+	border-radius: 5px;
+	font-family: 'Nunito';
+	margin-top: 5px;
+}
+
+.compose-send-button {
+	border: 1px solid #000;
+	border-radius: 3px;
+	background: transparent;
+	padding: 3px;
+	width: 22%;
+}
+
+.compose-send-button:hover {
+	background: #29528E;
+	color: #fff;
+}
+
+.admin-dropdown {
+	border: 1px solid #000;
+	border-radius: 5px;
+	background: transparent;
+	display: inline-block;
+	margin: 5px auto;
+}
+
 .messages-box-read {
 	border: 1px solid #000;
-	background: green;
+	/*background: green;*/
 	margin: 15px auto;
 }
 
@@ -409,7 +479,15 @@ label {
 	padding: 10px 10px 0 10px;
 	overflow: hidden;
 	cursor: pointer;
+	position: relative;
 }
+
+.replied-text {
+	position: absolute;
+	right: 0;
+	color: green;
+}
+
 
 .true {
 	border: none;
@@ -417,6 +495,10 @@ label {
 
 .false {
 	border: 2px solid #29528E;
+}
+
+.repliedtrue {
+	border: 2px solid green;
 }
 
 .main-message-header {

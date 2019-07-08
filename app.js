@@ -45,7 +45,8 @@ const messages = new Schema({
   date: String,
   message: String,
   subject: String,
-  isRead: Boolean
+  isRead: Boolean,
+  hasReplied: Boolean
 });
 
 const userSchema = new Schema({
@@ -200,7 +201,7 @@ app.post("/accountData", nocache, function(req, res){
     const userId = req.body.UserId;
     User.findOneAndUpdate({_id: userId}, {$push: {account: {type: type, memo: memo, amount: amount, dateAdded: newDate()}}}, {new: true}, function(err, foundUser){
       User.find({}, function(err, foundUsers){
-      res.render("account", {foundItem: foundUser.account, foundName: foundUser.firstName, foundId: foundUser._id, foundAmin: foundUser.isAdmin, foundUsers: foundUsers, adminForm: true});
+      res.render("account", {messageArray: req.user.messages, foundItem: foundUser.account, foundName: foundUser.firstName, foundId: foundUser._id, foundAmin: foundUser.isAdmin, foundUsers: foundUsers, adminForm: true});
       });
   });
   } else {
@@ -257,7 +258,7 @@ app.post("/adminUser", nocache, function(req, res){
   const userId = req.body.Accounts;
   User.findOne({_id: userId}, function(err, foundUser){
     User.find({}, function(err, foundUsers){
-      res.render("account", {foundItem: foundUser.account, foundName: foundUser.firstName, foundId: foundUser._id, foundAmin: foundUser.isAdmin, foundUsers: foundUsers, adminForm: true});
+      res.render("account", {messageArray: req.user.messages, foundItem: foundUser.account, foundName: foundUser.firstName, foundId: foundUser._id, foundAmin: foundUser.isAdmin, foundUsers: foundUsers, adminForm: true});
     });
   });
 } else {
@@ -284,8 +285,8 @@ app.get("/messages", nocache, function(req, res){
 
 app.post("/messages", function(req, res){
   if(req.isAuthenticated()){
-    User.findOneAndUpdate({_id: req.body.sendTo}, {$push: {messages: {from: {name: req.body.senderName, id: req.body.senderId}, subject: req.body.subject, message: req.body.message, date: newDate(), isRead: false}}}, function(err, user){
-      User.findOneAndUpdate({"messages._id": req.body.markRead}, {"$set": {"messages.$.isRead": true}}, function(err, user){
+    User.findOneAndUpdate({_id: req.body.sendTo}, {$push: {messages: {from: {name: req.body.senderName, id: req.body.senderId}, subject: req.body.subject, message: req.body.message, date: newDate(), isRead: false, hasReplied: false}}}, function(err, user){
+      User.findOneAndUpdate({"messages._id": req.body.markRead}, {"$set": {"messages.$.isRead": true, "messages.$.hasReplied": true}}, function(err, user){
         User.find({isAdmin: true}, function(err, users){
           res.redirect("/messages");
         })
@@ -295,6 +296,8 @@ app.post("/messages", function(req, res){
     res.redirect("/");
   }
 }); 
+
+
 app.post("/markAsRead", nocache, function(req, res){
   if(req.isAuthenticated()){
     User.findOneAndUpdate({"messages._id": req.body.markRead}, {"$set": {"messages.$.isRead": true}}, function(err){

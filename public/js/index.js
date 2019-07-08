@@ -13,3 +13,15 @@ function expandMe (x){
 	document.querySelectorAll("div.input")[x].classList.toggle("show");
 	document.querySelectorAll("div.now")[x].classList.toggle("overlay");
 }
+
+// document.querySelectorAll("div.message-overlay-div")[this].onclick=function(){
+// 	function(){
+// 		this.classList.toggle("message-overlay");
+// 	}
+// }
+
+$(document).ready(function(){
+  $(".compose-button").click(function(){
+    $(".compose-box").slideToggle("slow");
+  });
+});

@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <script src="https://kit.fontawesome.com/58ff903b9e.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito|Prata&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/styles3.css">
@@ -15,9 +17,15 @@
                 <li><button class="nav-buttons" id="button-2"><a href="/logout">LOG OUT</a></button></li>
             </ul>
         </nav>
-        <div>
-            <div>
+        <div class="compose-button">
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x icon-background1"></i>
+                <i class="fa fa-plus fa-stack-1x"></i>
+            </span>
+        </div>
+            <div class="compose-box">
                 <form action="/messages" method="POST">
+                        <p class="to-text">To: </p>
                     <select name="sendTo" class="admin-dropdown">
                         <option selected="true" disabled="disabled">Account</option>
                         <% for(var y = 0; y < foundUsers.length; y++){ %>
@@ -28,21 +36,29 @@
                         <% } %>
                         <% } %>
                     </select>
-                    <input type="text" name="subject" placeholder="subject">
-                    <input type="text" name="message">
+                    <br>
+                    <input type="text" name="subject" placeholder="subject" class="subject-input" autocomplete="off">
+                    <textarea name="message" rows="5" cols="40" class="compose-body"></textarea><br>
                     <input type="hidden" name="senderId" value=<%=userId%>>
                     <input type="hidden" name="senderName" value=<%=username%>>
-                    <button type="submit">Send</button>
+                    <button type="submit" class="compose-send-button">Send</button>
                 </form>
             </div>
-        </div>
 
         <% for(var i = messages.length -1; i >=0; i--){ %>
-            <div class="main-message-box <%=messages[i].isRead%>">
+            <div class="main-message-box <%=messages[i].isRead%> <%= 'replied' + messages[i].hasReplied%>">
+                <% if(messages[i].isRead === true){ %>
+                <% } %>
                 <div class="main-message-header">
                     <p class="message-from-text">
                         <%= messages[i].from.name %>
                     </p>
+                    <% if(messages[i].hasReplied === true){ %>
+                        <span class="replied-text">
+                                <i class="fas fa-check-double"></i>
+                                <span>replied</span>
+                        </span>
+                    <% } %>
                     <% if(messages[i].isRead === false){ %>
                         <span>
                           <form action="/markAsRead" method="POST">
