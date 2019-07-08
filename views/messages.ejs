@@ -21,7 +21,7 @@
                     <script>
                       setTimeout(function () {
                          window.location = "/messages";
-                      }, 2000)
+                      }, 1200)
                     </script>
                 <% } %>
         <nav>
@@ -41,9 +41,22 @@
         </div>
             <div class="compose-box">
                 <form action="/messages" method="POST">
-                        <p class="to-text">To: </p>
+                        <% if(isAdmin){ %>
+                            <select name="sendTo" class="admin-dropdown" required>
+                                <option selected="true" disabled="disabled" value="">
+                                    Choose User
+                                </option>
+                                <% for(var x = 0; x < allUsers.length; x++){  %>
+                                    <% if(String(allUsers[x]._id) !== String(userId)){ %>
+                                        <option value=<%=allUsers[x]._id%>>
+                                            <%= allUsers[x].username %>
+                                        </option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        <% } else { %>
                     <select name="sendTo" class="admin-dropdown" required>
-                        <option selected="true" disabled="disabled" value="">Account</option>
+                        <option selected="true" disabled="disabled" value="">Choose Admin</option>
                         <% for(var y = 0; y < foundUsers.length; y++){ %>
                         <% if(String(foundUsers[y]._id) !== String(userId)){ %>
                         <option value=<%=foundUsers[y]._id%>>
@@ -52,6 +65,7 @@
                         <% } %>
                         <% } %>
                     </select>
+                    <% } %>
                     <input type="text" name="subject" placeholder="subject" class="subject-input" autocomplete="off" required>
                     <textarea name="message" rows="5" cols="40" class="compose-body" required></textarea>
                     <input type="hidden" name="senderId" value=<%=userId%>>
@@ -60,12 +74,21 @@
                 </form>
             </div>
 
+
+        <% if(messages.length <= 0){ %>
+            <div class="empty-message">
+                <p>
+                    <i class="far fa-frown"></i>
+                    Your mailbox is empty.
+                </p>
+            </div>
+        <% } %>
         <% for(var i = messages.length -1; i >=0; i--){ %>
             <div class="main-message-box <%=messages[i].isRead%> <%= 'replied' + messages[i].hasReplied%>">
                 <div>
                     <form action="deleteMessages" method="POST">
                         <input type="hidden" name="messageId" value=<%=messages[i]._id%>>
-                        <button>send</button>
+                        <button class="message-delete-button"><i class="fas fa-trash-alt"></i></button>
                     </form>
                 </div>
                 <div class="main-message-header">

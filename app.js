@@ -272,11 +272,9 @@ app.post("/adminUser", nocache, function(req, res){
 app.get("/messages", nocache, function(req, res){
   if(req.isAuthenticated()){
     User.find({isAdmin: true}, function(err, users){
-      if(err){
-        console.log(err)
-      } else {
-        res.render("messages", {username: req.user.username, userId: req.user._id, messages: req.user.messages, sentStatus: false, foundUsers: users});
-      }
+      User.find({}, function(err, allUsers){
+        res.render("messages", {username: req.user.username, userId: req.user._id, messages: req.user.messages, sentStatus: false, foundUsers: users, allUsers: allUsers, isAdmin: req.user.isAdmin});
+      });
     });
   } else {
     res.redirect("/");
@@ -288,8 +286,10 @@ app.post("/messages", function(req, res){
     User.findOneAndUpdate({_id: req.body.sendTo}, {$push: {messages: {from: {name: req.body.senderName, id: req.body.senderId}, subject: req.body.subject, message: req.body.message, date: newDate(), isRead: false, hasReplied: false}, $slice: -15}}, function(err, user){
       User.findOneAndUpdate({"messages._id": req.body.markRead}, {"$set": {"messages.$.isRead": true, "messages.$.hasReplied": true}}, function(err, user){
         User.find({isAdmin: true}, function(err, users){
-        res.render("messages", {username: req.user.username, userId: req.user._id, messages: req.user.messages, sentStatus: true, foundUsers: users});
-        })
+          User.find({}, function(err, allUsers){
+            res.render("messages", {username: req.user.username, userId: req.user._id, messages: req.user.messages, sentStatus: true, foundUsers: users, isAdmin: req.user.isAdmin, allUsers: allUsers});
+          });
+        });
       });
     }); 
   } else {
@@ -308,8 +308,19 @@ app.post("/markAsRead", nocache, function(req, res){
   }
 });
 
-app.post("/deleteMessages", function(req, res){
-  console.log(req.body.messageId);
+
+app.post("/deleteMessages", nocache, function(req, res){
+  if(req.isAuthenticated()){
+    User.findOneAndUpdate({_id: req.user._id}, {$pull: {messages: {_id: req.body.messageId}}}, function(err){
+      if(err){
+        console.log(err);
+      } else {
+        res.redirect("/messages");
+      }
+      });
+  } else {
+    res.redirect("/");
+  }
 });
 
 

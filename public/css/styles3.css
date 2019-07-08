@@ -387,6 +387,16 @@ label {
 
 /***************************************MESSAGES PAGE ******************************************/
 
+.empty-message {
+	font-size: 3rem;
+	text-align: center;
+	margin-top: 10%;
+}
+
+.fa-frown {
+	color: #edc814;
+}
+
 .sent-alert {
 	border: 5px solid rgba(0, 0, 0, 0.5);
 	border-radius: 5px;
@@ -401,7 +411,7 @@ label {
     left: 34%;
     color: white;
     top: 34%;
-    z-index: 6;
+    z-index: 4;
 }
 
 .sent-alert-text {
@@ -448,9 +458,6 @@ label {
 	transition: 0.25s;
 }
 
-.to-text {
-	display: inline;
-}
 
 .subject-input {
 	display: block;
@@ -459,6 +466,7 @@ label {
 	border-radius: 5px;
 	background: transparent;
 	padding: 5px;
+	outline: none;
 }
 
 .subject-input::placeholder {
@@ -472,6 +480,7 @@ label {
 	font-family: 'Nunito';
 	margin: 5px auto;
 	display: block;
+	outline: none;
 }
 
 .compose-send-button {
@@ -482,11 +491,35 @@ label {
 	width: 22%;
 	margin: 0 auto;
 	display: block;
+	outline: none;
 }
 
 .compose-send-button:hover {
 	background: #29528E;
 	color: #fff;
+	outline: none;
+}
+
+.message-delete-button {
+	border: none;
+	background: transparent;
+	outline: none;
+	color: rgba(250, 75, 75, 0.5);
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	z-index: 3;
+}
+
+.message-delete-button:hover {
+	border: none;
+	background: transparent;
+	outline: none;
+	color: rgba(250, 75, 75, 1);
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	z-index: 3;
 }
 
 .admin-dropdown {
@@ -495,6 +528,7 @@ label {
 	background: transparent;
 	display: inline-block;
 	margin: 5px auto;
+	outline: none;
 }
 
 .messages-box-read {
@@ -613,7 +647,7 @@ label {
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 5;
+	z-index: 2;
 }
 
 .checkbox-container {
