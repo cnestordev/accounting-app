@@ -11,6 +11,19 @@
 </head>
 <body>
     <div class="container">
+        <%if(sentStatus === true){ %>
+                    <div class="sent-alert">
+                        <p class="sent-alert-text">Your message has been sent</p>
+                        <div class="sent-alert-icon">
+                            <i class="far fa-paper-plane"></i>
+                        </div>
+                    </div>
+                    <script>
+                      setTimeout(function () {
+                         window.location = "/messages";
+                      }, 2000)
+                    </script>
+                <% } %>
         <nav>
             <ul>
                 <li><button class="nav-buttons" id="button-1"><a href="/user">HOME</a></button></li>
@@ -22,12 +35,15 @@
                 <i class="fa fa-circle fa-stack-2x icon-background1"></i>
                 <i class="fa fa-plus fa-stack-1x"></i>
             </span>
+            <span>
+                <p>Compose</p>
+            </span>
         </div>
             <div class="compose-box">
                 <form action="/messages" method="POST">
                         <p class="to-text">To: </p>
-                    <select name="sendTo" class="admin-dropdown">
-                        <option selected="true" disabled="disabled">Account</option>
+                    <select name="sendTo" class="admin-dropdown" required>
+                        <option selected="true" disabled="disabled" value="">Account</option>
                         <% for(var y = 0; y < foundUsers.length; y++){ %>
                         <% if(String(foundUsers[y]._id) !== String(userId)){ %>
                         <option value=<%=foundUsers[y]._id%>>
@@ -36,9 +52,8 @@
                         <% } %>
                         <% } %>
                     </select>
-                    <br>
-                    <input type="text" name="subject" placeholder="subject" class="subject-input" autocomplete="off">
-                    <textarea name="message" rows="5" cols="40" class="compose-body"></textarea><br>
+                    <input type="text" name="subject" placeholder="subject" class="subject-input" autocomplete="off" required>
+                    <textarea name="message" rows="5" cols="40" class="compose-body" required></textarea>
                     <input type="hidden" name="senderId" value=<%=userId%>>
                     <input type="hidden" name="senderName" value=<%=username%>>
                     <button type="submit" class="compose-send-button">Send</button>
@@ -47,8 +62,12 @@
 
         <% for(var i = messages.length -1; i >=0; i--){ %>
             <div class="main-message-box <%=messages[i].isRead%> <%= 'replied' + messages[i].hasReplied%>">
-                <% if(messages[i].isRead === true){ %>
-                <% } %>
+                <div>
+                    <form action="deleteMessages" method="POST">
+                        <input type="hidden" name="messageId" value=<%=messages[i]._id%>>
+                        <button>send</button>
+                    </form>
+                </div>
                 <div class="main-message-header">
                     <p class="message-from-text">
                         <%= messages[i].from.name %>
@@ -79,8 +98,7 @@
                 </div>
                 <div class="read-message" id="read-message">
                     <span class="expand" id="expand">
-                        expand
-                        <hr>
+                        <i class="fas fa-chevron-down"></i>
                     </span>
                 </div>
                 <div class="main-message-body cut" id="main-message-body">
@@ -90,13 +108,13 @@
                     </p>
                     <div class="input show" id="input">
                         <form action="/messages" method="POST">
-                            <input type="text" name="message">
+                            <textarea name="message" rows="5" cols="40" class="compose-body" required></textarea>
                             <input type="hidden" name="sendTo" value=<%=messages[i].from.id%>>
                             <input type="hidden" name="senderId" value=<%=userId%>>
                             <input type="hidden" name="subject" value=<%= messages[i].subject %>>
                             <input type="hidden" name="senderName" value=<%=username%>>
                             <input type="hidden" name="markRead" value=<%=messages[i]._id%>>
-                            <button>Reply</button>
+                            <button class="compose-send-button">Reply</button>
                         </form>
                     </div>
                 </div>

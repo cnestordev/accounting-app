@@ -21,7 +21,11 @@ function expandMe (x){
 // }
 
 $(document).ready(function(){
-  $(".compose-button").click(function(){
-    $(".compose-box").slideToggle("slow");
+  $(".fa-plus").click(function(){
+    $(".compose-box").slideToggle("fast");
+    $(".fa-plus").toggleClass("fa-plus-rotated");
+  });
+  $(".fa-chevron-down").click(function(){
+  	$(this).toggleClass("fa-chevron-active");
   });
 });
