@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<script type="text/javascript" src="script.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Nunito|Prata&display=swap" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/css/styles.css">
-	<title>Welcome!</title>
-</head>
-<body>
+<%- include("header") -%>
 		<div class="signInBox">
 				<p class="signInText">Welcome, please sign up</p>
 				<form action="/signup" method="POST" id="theForm" autocomplete="off">
@@ -36,5 +28,4 @@
 					<button class="signInButton">Sign up</button>
 				</form>
 		</div>
-</body>
-</html>
+<%- include("footer") -%>

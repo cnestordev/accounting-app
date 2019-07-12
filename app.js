@@ -71,10 +71,6 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-const user1 = new User({
-  username: "Trumpifan",
-  password: "redwhiteblue77"
-});
 
 app.set('view engine', 'ejs');
 
@@ -97,14 +93,25 @@ function nocache(req, res, next) {
   next();
 }
 
-//----------------------------------------------------------------------------------------------//
+//------------------------------------------LOGIN----------------------------------------------------//
 
-
+//home page with login screen
 app.get("/", function(req, res){
   res.render("home", {failedAttempt: false});
 });
 
+//logout of user account
+app.get("/logout", nocache, function(req, res){
+  req.logout();
+  res.redirect("/");
+});
 
+//sign up page
+app.get("/signup", nocache, function(req, res){
+  res.render("signup", {exists: false, created: false});
+});
+
+//post request to login with username and password
 app.post("/", nocache, function(req, res){
   User.findOne({username: req.body.username}, function(err, foundUser){
     if(foundUser){
@@ -133,17 +140,27 @@ app.post("/", nocache, function(req, res){
   });
 });
 
-
-app.get("/logout", nocache, function(req, res){
-  req.logout();
-  res.redirect("/");
+//post request to create/sign up for new account
+app.post("/signup", nocache, function(req, res){
+  User.findOne({username: req.body.username}, function(err, foundUser){
+    if(!foundUser){
+      //creat new user
+      const hash = bcrypt.hashSync(req.body.answer, 10);
+      User.register({username: req.body.username, firstName: req.body.firstName, isAdmin: false, question: req.body.question, answer: hash}, req.body.password, function(err, user){
+    passport.authenticate("local")(req, res, function(){
+      res.redirect("/user");
+    });
+  });
+    } else {
+      //user already exists
+      res.render("signup", {exists: true, created: false});
+    }
+  });
 });
 
+//------------------------------------------ACCOUNT----------------------------------------------------//
 
-app.get("/signup", nocache, function(req, res){
-  res.render("signup", {exists: false, created: false});
-});
-
+//user's default page once logged in
 app.get("/user", nocache, function(req, res){
   if(req.isAuthenticated()){
   const userId = req.user._id;
@@ -173,25 +190,7 @@ app.get("/user", nocache, function(req, res){
   }
 });
 
-app.post("/signup", nocache, function(req, res){
-  User.findOne({username: req.body.username}, function(err, foundUser){
-    if(!foundUser){
-      //creat new user
-      const hash = bcrypt.hashSync(req.body.answer, 10);
-      User.register({username: req.body.username, firstName: req.body.firstName, isAdmin: false, question: req.body.question, answer: hash}, req.body.password, function(err, user){
-    passport.authenticate("local")(req, res, function(){
-      res.redirect("/user");
-    });
-  });
-    } else {
-      //user already exists
-      res.render("signup", {exists: true, created: false});
-    }
-  });
-});
-
-
-
+//admin's tool to add transaction items to user's account
 app.post("/accountData", nocache, function(req, res){
   if(req.isAuthenticated() && req.user.isAdmin){
     const datePosted = newDate();
@@ -210,7 +209,7 @@ app.post("/accountData", nocache, function(req, res){
 });
 
 
-
+//admin's tools to make any user have admin rights/tools
 app.post("/makeAdmin", nocache, function(req, res){
   if(req.isAuthenticated() && req.user.isAdmin){
     if(req.body.makeAdmin === "true"){
@@ -223,6 +222,7 @@ app.post("/makeAdmin", nocache, function(req, res){
   }
 });
 
+//admin's tool for deleting transaction items
 app.post("/deleteItem", nocache, function(req, res){
   if(req.isAuthenticated() && req.user.isAdmin){
     if(typeof(req.body.deleteItem) === "object"){
@@ -242,6 +242,7 @@ app.post("/deleteItem", nocache, function(req, res){
   }
 });
 
+//admin's tool for deleting a user account
 app.post("/deleteAccount", nocache, function(req, res){
   if(req.isAuthenticated() && req.user.isAdmin){
     const userId = req.body.delete;
@@ -253,6 +254,7 @@ app.post("/deleteAccount", nocache, function(req, res){
   }
 });
 
+//admin's tool for viewing other user's accounts and/or modifying them
 app.post("/adminUser", nocache, function(req, res){
   if(req.isAuthenticated() && req.user.isAdmin){
   const userId = req.body.Accounts;
@@ -266,9 +268,9 @@ app.post("/adminUser", nocache, function(req, res){
 }
 });
 
-//////////////////////////////////////EXPERIMENTAL MESSAGES///////////////////////////////////////////
+//------------------------------------------MESSAGES----------------------------------------------------//
 
-
+//the messages default page
 app.get("/messages", nocache, function(req, res){
   if(req.isAuthenticated()){
     User.find({isAdmin: true}, function(err, users){
@@ -281,6 +283,7 @@ app.get("/messages", nocache, function(req, res){
   }
 });
 
+//composing and/or replying to a message
 app.post("/messages", function(req, res){
   if(req.isAuthenticated()){
     User.findOneAndUpdate({_id: req.body.sendTo}, {$push: {messages: {from: {name: req.body.senderName, id: req.body.senderId}, subject: req.body.subject, message: req.body.message, date: newDate(), isRead: false, hasReplied: false}, $slice: -15}}, function(err, user){
@@ -297,7 +300,7 @@ app.post("/messages", function(req, res){
   }
 }); 
 
-
+//marking message as read by changing isRead value to true
 app.post("/markAsRead", nocache, function(req, res){
   if(req.isAuthenticated()){
     User.findOneAndUpdate({"messages._id": req.body.markRead}, {"$set": {"messages.$.isRead": true}}, function(err){
@@ -308,7 +311,7 @@ app.post("/markAsRead", nocache, function(req, res){
   }
 });
 
-
+//deleting a message
 app.post("/deleteMessages", nocache, function(req, res){
   if(req.isAuthenticated()){
     User.findOneAndUpdate({_id: req.user._id}, {$pull: {messages: {_id: req.body.messageId}}}, function(err){
@@ -326,8 +329,9 @@ app.post("/deleteMessages", nocache, function(req, res){
 
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//------------------------------------------PASSWORDS----------------------------------------------------//
 
+//changing a password when user is logged in and input's their current password first
 app.get("/change-password", nocache, function(req, res){
   if(req.isAuthenticated()){
   res.render("change-password", {changedPassword: false, failedAttempt: false});
@@ -336,6 +340,22 @@ app.get("/change-password", nocache, function(req, res){
   }
 });
 
+
+//page for user's who have forgetten password, validates through security question
+app.get("/verify-user", nocache, function(req, res){
+  res.render("verifyUser", {error: false});
+});
+
+//reset password form when user validates through answering security question
+app.get("/reset-password", nocache, function(req, res){
+  if(req.isAuthenticated()){
+    res.render("reset-password", {error: false, userId: req.user._id})
+  } else {
+    res.redirect("/");
+  }
+});
+
+//post request to change user's password by checking if existing password matches
 app.post('/changepassword', nocache, function(req, res) {
 if(req.isAuthenticated()){
   User.findOne({_id: req.user._id },(err, user) => {
@@ -363,13 +383,7 @@ if (err) {
 } 
 });
 
-
-
-app.get("/verify-user", nocache, function(req, res){
-  res.render("verifyUser", {error: false});
-});
-
-
+//post request for security question when user has forgotten password
 app.post("/verify-user", nocache, function(req, res){
   User.findOne({username: req.body.username}, function(err, user){
     if(!user){
@@ -382,31 +396,21 @@ app.post("/verify-user", nocache, function(req, res){
         if(bcrypt.compareSync(req.body.answer, user.answer)){
           //answers matched
           req.login(user, function(err){
-            console.log("404 " + req.isAuthenticated());
             res.redirect("/reset-password");
           });
         } else {
           //answers didn't match
-          console.log("answers didn't match");
           res.render("verifyUser", {verifiedUser: false, error: "2"});
         }
       } else {
         //question didn't match
-        console.log("question didn't match");
         res.render("verifyUser", {verifiedUser: false, error: "2"});
       }
     }
   });
 });
 
-app.get("/reset-password", nocache, function(req, res){
-  if(req.isAuthenticated()){
-    res.render("reset-password", {error: false, userId: req.user._id})
-  } else {
-    res.redirect("/");
-  }
-});
-
+//post request for user to change password when current password has been forgotten
 app.post("/new-password", nocache, function(req, res){
   if(req.isAuthenticated()){
     User.findOne({_id: req.body.userId}, function(err, user){
@@ -428,6 +432,9 @@ app.post("/new-password", nocache, function(req, res){
   }
 });
 
+//------------------------------------------PROFILE----------------------------------------------------//
+
+//user's profile, accessible once logged in
 app.get("/myprofile", nocache, function(req, res){
   if(req.isAuthenticated()){
     res.render("profile", {user: req.user});
@@ -436,6 +443,7 @@ app.get("/myprofile", nocache, function(req, res){
   }
 });
 
+//------------------------------------------NO PAGE EXISTS----------------------------------------------------//
 
 app.get("*", function(req, res){
   res.render("404");

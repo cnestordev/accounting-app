@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html>
-   <head>
-      <script src="https://kit.fontawesome.com/58ff903b9e.js"></script>
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-      <link href="https://fonts.googleapis.com/css?family=Nunito|Prata&display=swap" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" href="/css/styles3.css">
-      <title>My Account</title>
-   </head>
-   <body>
+    <%- include("header2") -%>
+
       <% var totalBal = 0 %>
       <div class="container">
 
@@ -153,5 +145,5 @@
             <span class="balanceText">Your balance: $<%= totalBal.toFixed(2) %></span>
          </div>
       </div>
-   </body>
-</html>
+   
+   <%-include("footer") -%>
