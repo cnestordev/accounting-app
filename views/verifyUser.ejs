@@ -17,16 +17,16 @@
 
 		<div class="password-box form-inline">
 			<form action="/verify-user" method="POST" class="form-password">
-				<label>Username:</label>
-				<input type="text" name="username" autocomplete="off" placeholder="username" required>
-				<label>Security Question:</label>
+				<label class="verify-user-label">Username:</label>
+				<input class="verify-user-input" type="text" name="username" autocomplete="off" required>
+				<label class="verify-user-label">Security Question:</label>
 				<select name="question" id="question-field" required>
 					<option value="">Choose YOUR security question:</option>
 		  			<option value="question1">What is your dream vacation?</option>
 		  			<option value="question2">What is your dream car?</option>
 				</select>
-				<label>Answer:</label>
-				<input type="text" name="answer" autocomplete="off" placeholder="answer" required>
+				<label class="verify-user-label">Answer:</label>
+				<input class="verify-user-input" type="text" name="answer" autocomplete="off" required>
 				<% if(error === "1"){ %>
 				<span><p class="authFailed">User does not exist, please try again.</p></span>
 			<% } else if (error === "2"){ %>

@@ -3,11 +3,27 @@
 }
 
 body {
-	/*background-image: url("http://hdqwalls.com/download/small-memory-lp-1920x1080.jpg");*/
-	background-color: #0088fd;
+	background-image: url("https://imagizer.imageshack.com/img924/3705/dOEqqa.jpg");
+	background-size: cover;
+	background-color: #C4C4C4;
 	color: #fff;
 	font-family: 'Prata', serif;
 }
+
+.main-box {
+	position: relative;
+}
+
+.main-overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(255, 255, 255, 0.6);
+	z-index: -1;
+}
+
 
 /*body::after {
 	content: "";
@@ -24,16 +40,18 @@ body {
 .signInBox {
 	border: 1px solid #fff;
 	border-radius: 7px;
-	background-color: rgba(255, 255, 255, 0.2);
+	background-color: #fff;
 	text-align: center;
 	width: 40%;
 	margin: 12% auto 20% auto;
 	padding: 15px;
 	box-sizing: border-box;
+	box-shadow: 0px 0px 3px 0px rgba(46,46,46,1);
 }
 
 .signInText, .welcomeText {
 	font-size: 1.6rem;
+	color: #000;
 	display: inline-block;
 	padding-bottom: 10px;
 }
@@ -43,23 +61,29 @@ input {
 	font-family: 'Nunito', sans-serif;
 	font-size: 1.2rem;
 	/*border-left: 1px solid #fff;*/
-	border-bottom: 1px dashed #fff;
+	border: 1px solid #d8d8d8;
+	border-radius: 5px;
 	display: block;
 	padding: 10px;
 	margin: 20px auto;
 	background: transparent;
-	color: #fff;
+	color: #000;
 	outline: none;
 }
 
+input:focus {
+	border-color: #000;
+}
+
 ::placeholder {
-	color: rgba(250, 250, 250, 0.8);
+	color: #C4C4C4;
 	font-size: 1rem;
 	text-transform: lowercase;
 }
 
 .forgotText {
 	font-size: .7rem;
+	color: #333;
 }
 
 .forgotText a {
@@ -67,29 +91,29 @@ input {
 }
 
 button {
-	border: 1px solid #fff;
+	border: 1px solid transparent;
 	border-radius: 5px;
 	font-family: "Nunito";
 	padding: 8px;
-	background: transparent;
-	color: #fff;
-	box-shadow: 0px 0px 3px 0px rgba(46,46,46,1);
+	background: #4880ce;
+	color: #333;
 	margin-bottom: 5px;
 	margin-top: 5px;
 	width: 100px;
 }
 
 button:hover {
-	background: #fff;
-	color: #333;
+	background: #29528E;
+	color: #fff;
 }
 
 a:link, a:visited {
-	color: #fff;
+	color: #333;
 }
 
 .newUserLink, a {
 	font-size: 0.8rem;
+	color: #333;
 }
 
 
@@ -146,3 +170,55 @@ a:link, a:visited {
 	padding: 5px;
 	color: #333;
 }
+/*********************************************HOME PAGE MOBILE**************************************************/
+
+@media screen and (max-width: 750px) {
+  body {
+  	background-color: #fff;
+  	background-image: none;
+  }
+
+  .signInBox {
+  	width: 100%;
+  	border-color: #fff;
+  	box-shadow: none;
+  }
+
+  .signInBox input {
+  	width: 90%;
+  	border-color: #6f9cdb;
+  }
+
+  .signInBox input:focus {
+  	border-color: #29528E;
+  	border-width: 2px;
+  }
+
+  .signInBox button {
+  	width: 80%;
+  	height: 50px;
+
+  }
+
+  .welcomeText {
+  	font-size: 1rem;
+  }
+
+  .main-overlay {
+  	background: transparent;
+  }
+
+  /***********************************************SIGN UP MOBILE****************************************/
+
+  #question-field {
+  	width: 95%;
+  	border: 1px solid #6f9cdb;
+  	height: 30px;
+  }
+}
+
+
+
+
+
+
