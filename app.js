@@ -18,7 +18,7 @@ const monthArray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep
 const app = express();
 
 app.use(session({
-  secret: "thisisoursecret",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false
 }));
@@ -27,7 +27,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb://localhost:27017/user2DB', {useNewUrlParser: true});
+mongoose.connect(`mongodb+srv://admin-main:${process.env.MONGOPW}@cluster-ua1ak.mongodb.net/userDB`, {useNewUrlParser: true});
 
 const userAccount = new Schema({
   type: String,
@@ -451,6 +451,6 @@ app.get("*", function(req, res){
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
-app.listen(3000, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log("Server started on port 3000");
 });
