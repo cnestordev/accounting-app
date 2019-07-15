@@ -1,31 +1,18 @@
     <%- include("header2") -%>
+    <%- include("nav") -%>
     <div class="account-spacing">
     </div>
 
       <% var totalBal = 0 %>
-      <div class="container">
+       <% let owe = 0 %>
+       <% foundItem.forEach(function(item){ %>
+          <% owe = owe + item.amount %>
+       <% }); %>
 
-        <% function checkUnread(){ %>
-          <% let msgCount = 0 %>
-          <% for(var i = 0; i < messageArray.length; i++){ %>
-            <% if(messageArray[i].isRead === false){ %>
-              <% msgCount++ %>
-            <% } %>
-          <% } %>
-            <% if(msgCount > 0){ %>
-          <% return msgCount; %>
-          <% } else { %>
-            <% let msgCount = null; %>
-            <% return msgCount; %>
-        <% } %>
-       <% } %>
-
-       <% checkUnread() %>
-
-       <% let unread = checkUnread() %>
          <div class="box">
             <div class="welcome-space">
                <span class="welcomeText">Welcome, <%= foundName %></span>
+               <span class="balanceText">Balance: <%= owe.toFixed(2) %> </span>
             </div>
             <% if(foundAmin || adminForm){ %>
             <div class="adminUser">
@@ -56,7 +43,7 @@
                           <summary>
                              <%= foundItem[i].type %> <i class="far fa-caret-square-down"></i>
                           </summary>
-                          <%= foundItem[i].dateAdded %>
+                          <%= foundItem[i].dateAdded.toDateString() %>
                           <% if(foundAmin || adminForm){ %>
                           <input type="checkbox" name="deleteItem" value=<%=foundItem[i]._id%>>
                           <% } %>
@@ -127,8 +114,6 @@
           </div>
             <% } %>
           </fieldset>
-            <span class="balanceText"><p><%=foundName%></p>balance: $<%= totalBal.toFixed(2) %></span>
          </div>
-      </div>
    
    <%-include("footer") -%>

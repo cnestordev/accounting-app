@@ -1,0 +1,33 @@
+<% function checkUnread(){ %>
+          <% let msgCount = 0 %>
+          <% for(var i = 0; i < messageArray.length; i++){ %>
+            <% if(messageArray[i].isRead === false){ %>
+              <% msgCount++ %>
+            <% } %>
+          <% } %>
+            <% if(msgCount > 0){ %>
+          <% return msgCount; %>
+          <% } else { %>
+            <% let msgCount = null; %>
+            <% return msgCount; %>
+        <% } %>
+       <% } %>
+
+       <% let unread = checkUnread() %>
+
+<div class="ui menu">
+    <div class="header item">
+        <a href="/user"><i class="fas fa-list"></i> My Account</a>
+    </div>
+    <a href="/messages" class="right item">
+    	<% if(unread > 0){ %>
+    	Messages<i class="envelope outline icon"></i><%=unread%>
+    	<% } else { %>
+    		Messages
+    	<% } %>
+	</a>
+    <a href="/myprofile" class="item">Profile</a>
+    <a href="/logout" class="item">Logout</a>
+</div>
+<div class="spacing">
+</div>

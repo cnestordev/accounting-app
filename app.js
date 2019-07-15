@@ -34,7 +34,7 @@ const userAccount = new Schema({
   memo: String,
   amount: Number,
   balance: Number,
-  dateAdded: String
+  dateAdded: {type: Date, default: Date.now}
 });
 
 const messages = new Schema({
@@ -42,7 +42,7 @@ const messages = new Schema({
     name: String,
     id: String
   },
-  date: String,
+  date: {type: Date, default: Date.now},
   message: String,
   subject: String,
   isRead: Boolean,
@@ -53,12 +53,13 @@ const userSchema = new Schema({
   firstName: String,
   username: String,
   password: String,
-  date: String,
+  date: {type: Date, default: Date.now},
   isAdmin: Boolean,
   question: String,
   answer: String,
   messages: [messages],
-  account: [userAccount]
+  account: [userAccount],
+  totalBalance: String
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -76,15 +77,6 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
-
-function newDate() {
-  const newDate = new Date();
-  const newMonth = monthArray[newDate.getMonth()];
-  const newDay = newDate.getDate();
-  const newYear = newDate.getFullYear();
-  const newFullYear = `${newMonth} ${newDay}, ${newYear}`;
-  return newFullYear;
-}
 
 function nocache(req, res, next) {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
@@ -193,12 +185,11 @@ app.get("/user", nocache, function(req, res){
 //admin's tool to add transaction items to user's account
 app.post("/accountData", nocache, function(req, res){
   if(req.isAuthenticated() && req.user.isAdmin){
-    const datePosted = newDate();
     const type = req.body.type;
     const memo = req.body.memo;
     const amount = req.body.amount;
     const userId = req.body.UserId;
-    User.findOneAndUpdate({_id: userId}, {$push: {account: {type: type, memo: memo, amount: amount, dateAdded: newDate()}}}, {new: true}, function(err, foundUser){
+    User.findOneAndUpdate({_id: userId}, {$push: {account: {type: type, memo: memo, amount: amount }}}, {new: true}, function(err, foundUser){
       User.find({}, function(err, foundUsers){
       res.render("account", {messageArray: req.user.messages, foundItem: foundUser.account, foundName: foundUser.firstName, foundId: foundUser._id, foundAmin: foundUser.isAdmin, foundUsers: foundUsers, adminForm: true});
       });
@@ -275,7 +266,7 @@ app.get("/messages", nocache, function(req, res){
   if(req.isAuthenticated()){
     User.find({isAdmin: true}, function(err, users){
       User.find({}, function(err, allUsers){
-        res.render("messages", {username: req.user.username, userId: req.user._id, messages: req.user.messages, sentStatus: false, foundUsers: users, allUsers: allUsers, isAdmin: req.user.isAdmin});
+        res.render("messages", {messageArray: req.user.messages, username: req.user.username, userId: req.user._id, messages: req.user.messages, sentStatus: false, foundUsers: users, allUsers: allUsers, isAdmin: req.user.isAdmin});
       });
     });
   } else {
@@ -286,11 +277,11 @@ app.get("/messages", nocache, function(req, res){
 //composing and/or replying to a message
 app.post("/messages", function(req, res){
   if(req.isAuthenticated()){
-    User.findOneAndUpdate({_id: req.body.sendTo}, {$push: {messages: {from: {name: req.body.senderName, id: req.body.senderId}, subject: req.body.subject, message: req.body.message, date: newDate(), isRead: false, hasReplied: false}, $slice: -15}}, function(err, user){
+    User.findOneAndUpdate({_id: req.body.sendTo}, {$push: {messages: {from: {name: req.body.senderName, id: req.body.senderId}, subject: req.body.subject, message: req.body.message, isRead: false, hasReplied: false}, $slice: -15}}, function(err, user){
       User.findOneAndUpdate({"messages._id": req.body.markRead}, {"$set": {"messages.$.isRead": true, "messages.$.hasReplied": true}}, function(err, user){
         User.find({isAdmin: true}, function(err, users){
           User.find({}, function(err, allUsers){
-            res.render("messages", {username: req.user.username, userId: req.user._id, messages: req.user.messages, sentStatus: true, foundUsers: users, isAdmin: req.user.isAdmin, allUsers: allUsers});
+            res.render("messages", {messageArray: req.user.messages, username: req.user.username, userId: req.user._id, messages: req.user.messages, sentStatus: true, foundUsers: users, isAdmin: req.user.isAdmin, allUsers: allUsers});
           });
         });
       });
@@ -334,7 +325,7 @@ app.post("/deleteMessages", nocache, function(req, res){
 //changing a password when user is logged in and input's their current password first
 app.get("/change-password", nocache, function(req, res){
   if(req.isAuthenticated()){
-  res.render("change-password", {changedPassword: false, failedAttempt: false});
+  res.render("change-password", {messageArray: req.user.messages, changedPassword: false, failedAttempt: false});
   } else {
     res.redirect("/");
   }
@@ -372,7 +363,7 @@ if (err) {
     res.render("change-password", {failedAttempt: true, changedPassword: false});
 } else { 
   user.save()
-  res.render("change-password", {changedPassword: true, failedAttempt: false});
+  res.render("change-password", {messageArray: req.user.messages, changedPassword: true, failedAttempt: false});
              }
              });
     }
@@ -437,7 +428,7 @@ app.post("/new-password", nocache, function(req, res){
 //user's profile, accessible once logged in
 app.get("/myprofile", nocache, function(req, res){
   if(req.isAuthenticated()){
-    res.render("profile", {user: req.user});
+    res.render("profile", {messageArray: req.user.messages, user: req.user});
   } else {
     res.redirect("/");
   }

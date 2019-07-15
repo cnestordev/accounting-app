@@ -34,6 +34,18 @@ a:hover {
   margin-bottom: 3%;
 }
 
+/*======NAV BAR MAIL ENVELOPE=======*/
+
+i.icon.envelope.outline:before {
+    content: "\f0e0";
+    margin-left: 2px;
+}
+
+/*======NAV BAR MESSAGES RIGHT-SIDE BORDER======*/
+.ui.menu:not(.vertical) .right.item, .ui.menu:not(.vertical) .right.menu {
+    border-right: 1px solid #F7F7F7;
+}
+
 /*nav {
   text-align: right;
   display: flex;
@@ -170,16 +182,14 @@ details > summary {
 
 .balanceText {
   font-size: 1.0rem;
-  float: right;
-  margin-bottom: 10px;
   font-family: 'Nunito';
   color: #333;
   padding: 8px;
   background: #fff;
   border-radius: 7px;
-  position: absolute;
-  top: 0;
-  right: 0;
+  display: block;
+  width: 15%;
+  margin: 0 auto;
 }
 
 .delete-button {
@@ -349,6 +359,17 @@ input.change-password-input {
   justify-content: center;
   text-align: center;
 }
+
+.reset-password-input {
+  border: 1px solid #000;
+  border-radius: 5px;
+  background: #fff;
+  display: inline-block;
+  width: 300px;
+  margin: 0 auto 5% auto;
+  font-size: 1.4rem;
+}
+
 /*****************************verify user********************************************/
 
 .verify-user-label {
@@ -770,6 +791,7 @@ input.change-password-input {
   margin-bottom: 28%;
 }*/
 
+
   .placeholder {
     position: relative;
     height: 30px;
@@ -818,35 +840,28 @@ input.change-password-input {
   }
 
   .balanceText {
-  font-size: 1.0rem;
-  font-family: 'Nunito';
-  color: #333;
-  padding: 5px;
-  background: #fff;
-  border: 1px solid #29528E;
-  text-align: center;
-  border-radius: 7px;
-  position: absolute;
-  top: 0;
-  left: 20%;
-  width: 60%;
-}
+    font-size: 1.0rem;
+    font-family: 'Nunito';
+    color: #333;
+    padding: 8px;
+    background: #fff;
+    border-radius: 7px;
+    display: block;
+    width: 40%;
+    margin: 0 auto;
+  }
 
-.welcome-space {
-  margin-bottom: 15%;
-  
-}
 
 .accounts-dropdown {
-	margin-bottom: 10px;
-    position: absolute;
-    top: -40px;
-    left: 40%;
+    margin-bottom: 10px;
+    position: relative;
+    top: 0;
+    left: 37%;
 }
 
-.welcomeText {
+/*.welcomeText {
   display: none;
-}
+}*/
 
 .addItem-button {
   margin: 2% auto 0 auto;
