@@ -17,6 +17,11 @@ body::after {
   z-index: -1;
 }
 
+.ui.menu {
+  width: 100%;
+  overflow: hidden;
+}
+
 .box {
   position: relative;
 }
@@ -791,6 +796,11 @@ input.change-password-input {
   margin-bottom: 28%;
 }*/
 
+.container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 
   .placeholder {
     position: relative;
@@ -817,6 +827,7 @@ input.change-password-input {
     border-top-left-radius: 0;
     margin: 10px auto;
     height: auto;
+    width: 94%;
   }
 
   .row-main {
