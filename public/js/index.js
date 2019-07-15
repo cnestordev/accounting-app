@@ -24,6 +24,7 @@ $(document).ready(function(){
   $(".fa-plus").click(function(){
     $(".compose-box").slideToggle("fast");
     $(".fa-plus").toggleClass("fa-plus-rotated");
+    $(".fa-circle").toggleClass("icon-background2");
   });
   $(".fa-chevron-down").click(function(){
   	$(this).toggleClass("fa-chevron-active");

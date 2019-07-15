@@ -170,6 +170,10 @@ a:link, a:visited {
 	padding: 5px;
 	color: #333;
 }
+
+#username {
+	text-transform: lowercase;
+}
 /*********************************************HOME PAGE MOBILE**************************************************/
 
 @media screen and (max-width: 750px) {

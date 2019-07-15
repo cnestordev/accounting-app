@@ -26,7 +26,15 @@ a:hover {
   text-decoration: none;
 }
 
-nav {
+.fa-list {
+  margin-right: 5px;
+}
+
+.spacing {
+  margin-bottom: 3%;
+}
+
+/*nav {
   text-align: right;
   display: flex;
   justify-content: flex-end;
@@ -84,7 +92,7 @@ nav a:hover {
   color: #333;
   transition: 0.25s;
   box-sizing: border-box;
-}
+}*/
 
 .fa-envelope {
   font-size: 0.8rem;
@@ -341,6 +349,31 @@ input.change-password-input {
   justify-content: center;
   text-align: center;
 }
+/*****************************verify user********************************************/
+
+.verify-user-label {
+  display: block;
+  text-align: center;
+}
+
+.verify-user-input {
+  border: 1px solid #000;
+  border-radius: 5px;
+  background: #fff;
+  display: inline-block;
+  width: 300px;
+  margin: 0 auto 5% auto;
+  font-size: 1.4rem;
+}
+
+.verify-user-options {
+  margin-bottom: 5%;
+}
+
+.password-box button {
+  margin-top: 20px;
+  width: 50%;
+}
 
 /*****************************forgot password****************************************/
 
@@ -453,6 +486,12 @@ input.change-password-input {
 .icon-background1 {
     color: #29528e;
 }
+
+.icon-background2 {
+    color: #ff6262;
+}
+
+
 
 .fa-plus {
   color: #fff;
@@ -720,10 +759,25 @@ input.change-password-input {
 /*********************************************MOBILE**************************************************/
 @media screen and (max-width: 750px) {
 
+/* .adminUser {
+    position: relative;
+    top: -15px;
+    z-index: 1;
+}*/
+
+/*.account-spacing {
+  width: 100%;
+  margin-bottom: 28%;
+}*/
+
   .placeholder {
     position: relative;
     height: 30px;
   }
+
+  .spacing {
+  margin-bottom: 2%;
+}
 
  
   .col-content {

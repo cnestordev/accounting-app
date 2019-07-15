@@ -173,7 +173,7 @@ app.get("/user", nocache, function(req, res){
         if(foundUser.isAdmin === true){
           // send over userDB
           User.find({}, function(err, foundUsers){
-            res.render("account", {messageArray: req.user.messages, foundItem: foundUser.account, foundName: foundUser.firstName, foundId: foundUser._id, foundAmin: foundUser.isAdmin, foundUsers: foundUsers, adminForm: false});
+            res.render("account", {messageArray: req.user.messages, foundItem: foundUser.account, foundName: foundUser.firstName, foundId: foundUser._id, foundAmin: foundUser.isAdmin, foundUsers: foundUsers, adminForm: true});
           });
         } else {
         res.render("account", {messageArray: req.user.messages, foundItem: foundUser.account, foundName: foundUser.firstName, foundId: foundUser._id, foundAmin: foundUser.isAdmin, adminForm: false});

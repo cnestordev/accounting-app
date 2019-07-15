@@ -1,4 +1,6 @@
     <%- include("header2") -%>
+    <div class="account-spacing">
+    </div>
 
       <% var totalBal = 0 %>
       <div class="container">
@@ -21,29 +23,12 @@
        <% checkUnread() %>
 
        <% let unread = checkUnread() %>
-
-         <nav>
-            <ul>
-               <li><button class="nav-buttons" id="button-1"><a href="/myprofile"><%= foundName %></a></button></li>
-              <% if(unread){ %>
-                 <li><button class="nav-buttons" id="button-2"><a href="/messages" id="message-link">Messages <i class="far fa-envelope"></i><span class="msgCount"><%=" " + unread%></span></i></a></button></li>
-               <% } else { %>
-                    <li><button class="nav-buttons" id="button-2"><a href="/messages" id="message-link">Messages<span class="msgCount"><%=unread%></span></i></a></button></li>
-                 <% } %>
-
-
-
-
-
-               <li><button class="nav-buttons" id="button-2"><a href="/logout">LOG OUT</a></button></li>
-            </ul>
-         </nav>
          <div class="box">
             <div class="welcome-space">
                <span class="welcomeText">Welcome, <%= foundName %></span>
             </div>
             <% if(foundAmin || adminForm){ %>
-            <div>
+            <div class="adminUser">
                <form action="/adminUser" method="POST">
                   <select name="Accounts" class="accounts-dropdown" onchange="this.form.submit()">
                      <option selected="true" disabled="disabled">Account</option>
@@ -69,7 +54,7 @@
                     <div class="col-sm-12 col-md-3 col-content">
                        <details>
                           <summary>
-                             <%= foundItem[i].type %>
+                             <%= foundItem[i].type %> <i class="far fa-caret-square-down"></i>
                           </summary>
                           <%= foundItem[i].dateAdded %>
                           <% if(foundAmin || adminForm){ %>
@@ -142,7 +127,7 @@
           </div>
             <% } %>
           </fieldset>
-            <span class="balanceText">Your balance: $<%= totalBal.toFixed(2) %></span>
+            <span class="balanceText"><p><%=foundName%></p>balance: $<%= totalBal.toFixed(2) %></span>
          </div>
       </div>
    
