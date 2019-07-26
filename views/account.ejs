@@ -12,9 +12,9 @@
          <div class="box">
             <div class="welcome-space">
                <span class="welcomeText">Welcome, <%= foundName %></span>
-               <span class="balanceText">Balance: <%= owe.toFixed(2) %> </span>
-            </div>
-            <% if(foundAmin || adminForm){ %>
+               <span class="balanceText">Balance: $<%= owe.toFixed(2) %> </span>
+
+                 <% if(foundAmin || adminForm){ %>
             <div class="adminUser">
                <form action="/adminUser" method="POST">
                   <select name="Accounts" class="accounts-dropdown" onchange="this.form.submit()">
@@ -26,9 +26,14 @@
                </form>
             </div>
             <% } %>
+            </div>
+
+            <% if(foundAmin){ %>
             <div class="placeholder">
               
             </div>
+            <% } %>
+
               <div class="row row-main" id="row-main">
                  <div class="col col-main">Type:</div>
                  <div class="col col-main">Memo:</div>

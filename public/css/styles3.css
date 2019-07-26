@@ -1,7 +1,8 @@
 body {
   font-family: 'Nunito';
   /*background-image: url("https://imagizer.imageshack.com/img921/8729/Ia1vVY.jpg");*/
-  background-color: #e2e2e2;
+  /*background-color: #e2e2e2;*/
+  background-color: #fff;
   background-size: cover;
 }
 
@@ -180,20 +181,22 @@ details > summary {
 }
 
 .welcome-space {
-  margin-bottom: 4%;
+/*  margin-bottom: 4%;*/
+  background: #fff;
   text-align: center;
-
+  padding: 5% 0 0 0;
 }
 
+
 .balanceText {
-  font-size: 1.0rem;
+  font-size: 2.2rem;
   font-family: 'Nunito';
   color: #333;
   padding: 8px;
   background: #fff;
   border-radius: 7px;
   display: block;
-  width: 15%;
+  width: 22%;
   margin: 0 auto;
 }
 
@@ -641,7 +644,7 @@ input.change-password-input {
 
 
 .true {
-  border: none;
+  border: 2px solid #ededed;
 }
 
 .false {
@@ -651,6 +654,7 @@ input.change-password-input {
 .repliedtrue {
   border: 2px solid green;
 }
+
 
 .main-message-header {
   position: relative;
@@ -718,7 +722,7 @@ input.change-password-input {
 }
 
 .overlay {
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.95));
   height: 2.5rem;
   width: 100%;
   position: absolute;
@@ -785,16 +789,21 @@ input.change-password-input {
 /*********************************************MOBILE**************************************************/
 @media screen and (max-width: 750px) {
 
-/* .adminUser {
-    position: relative;
-    top: -15px;
-    z-index: 1;
-}*/
+.accounts-dropdown {
+    margin-bottom: 10px;
+    background: transparent;
+    color: #fff;
+    width: 25%;
+}
 
 /*.account-spacing {
   width: 100%;
   margin-bottom: 28%;
 }*/
+
+.ui.menu{
+    margin: 0;
+}
 
 .container {
   padding-left: 0;
@@ -806,6 +815,18 @@ input.change-password-input {
     position: relative;
     height: 30px;
   }
+
+.welcome-space {
+/*  margin-bottom: 4%;*/
+  background-image: url("https://stmed.net/sites/default/files/blue-mountains-wallpapers-27782-634745.jpg");
+  background-size: cover;
+  text-align: center;
+  padding: 5% 0 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
 
   .spacing {
   margin-bottom: 2%;
@@ -819,15 +840,17 @@ input.change-password-input {
   }
 
   .row {
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-top-color: #29528E;
-    border-top-width: 2px;
-    border-radius: 3px;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
+    border: none;
+    border-bottom: 1px solid #e1e1e1;
+    background: #fff;
     margin: 10px auto;
     height: auto;
     width: 94%;
+  }
+
+  .row:first-of-type {
+    border-top: 1px solid #e1e1e1;
+    margin-top: 0;
   }
 
   .row-main {
@@ -851,24 +874,17 @@ input.change-password-input {
   }
 
   .balanceText {
-    font-size: 1.0rem;
+    font-size: 2.0rem;
     font-family: 'Nunito';
-    color: #333;
+    color: #fff;
     padding: 8px;
-    background: #fff;
+    background: transparent;
     border-radius: 7px;
     display: block;
     width: 40%;
     margin: 0 auto;
   }
 
-
-.accounts-dropdown {
-    margin-bottom: 10px;
-    position: relative;
-    top: 0;
-    left: 37%;
-}
 
 /*.welcomeText {
   display: none;
@@ -898,6 +914,18 @@ input.change-password-input {
 div.form-box select {
   display: block;
   margin: 10px auto;
+}
+
+/*transacgtion type*/
+details > summary {
+    display: block;
+    color: #3b86ff;
+}
+
+/*dropdown arrow trans type*/
+.fa-caret-square-down:before {
+    content: "\f150";
+    color: #616161;
 }
 
 
