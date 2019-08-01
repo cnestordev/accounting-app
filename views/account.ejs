@@ -17,8 +17,8 @@
     <div class="welcome-space">
         <span class="welcomeText">Welcome,
             <%= foundName %></span>
-        <span class="balanceText">Balance: $
-            <%= owe.toFixed(2) %> </span>
+        <span class="balanceText">Balance:
+            $<%= owe.toFixed(2) %> </span>
         <% if(foundAmin || adminForm){ %>
         <div class="adminUser">
             <form action="/adminUser" method="POST">
@@ -127,3 +127,4 @@
     </fieldset>
 </div>
 <%-include("footer") -%>
+
