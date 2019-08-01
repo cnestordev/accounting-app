@@ -2,8 +2,19 @@
 	font-family: 'Prata', serif;
 }
 
+.homepage-overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.75);
+	z-index: -1;
+}
+
 body {
 	background-image: url("https://imagizer.imageshack.com/img924/3705/dOEqqa.jpg");
+	background-repeat: no-repeat;
 	background-size: cover;
 	background-color: #C4C4C4;
 	color: #fff;
@@ -24,10 +35,6 @@ body {
 	z-index: -1;
 }
 
-.fa-adjust {
-	color: #000;
-}
-
 
 /*body::after {
 	content: "";
@@ -42,12 +49,11 @@ body {
 }*/
 
 .signInBox {
-	border: 1px solid #fff;
 	border-radius: 7px;
-	background-color: #fff;
+	background-color: #2e2e2e;
 	text-align: center;
 	width: 40%;
-	margin: 12% auto 20% auto;
+	margin: 12% auto 100px auto;
 	padding: 15px;
 	box-sizing: border-box;
 	box-shadow: 0px 0px 3px 0px rgba(46,46,46,1);
@@ -55,7 +61,7 @@ body {
 
 .signInText, .welcomeText {
 	font-size: 1.6rem;
-	color: #000;
+	color: #fff;
 	display: inline-block;
 	padding-bottom: 10px;
 }
@@ -87,7 +93,7 @@ input:focus {
 
 .forgotText {
 	font-size: .7rem;
-	color: #333;
+	color: #fff;
 }
 
 .forgotText a {
@@ -112,12 +118,12 @@ button:hover {
 }
 
 a:link, a:visited {
-	color: #333;
+	color: #fff;
 }
 
 .newUserLink, a {
 	font-size: 0.8rem;
-	color: #333;
+	color: #fff;
 }
 
 
@@ -175,14 +181,15 @@ a:link, a:visited {
 	color: #333;
 }
 
-#username {
-	text-transform: lowercase;
+#username, #password {
+	background: #5f5f5f;
+	color: #fff;
 }
 /*********************************************HOME PAGE MOBILE**************************************************/
 
 @media screen and (max-width: 750px) {
   body {
-  	background-color: #fff;
+  	background-color: #2E2E2E;
   	background-image: none;
   }
 

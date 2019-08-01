@@ -3,122 +3,127 @@
     <div class="account-spacing">
     </div>
 
-      <% var totalBal = 0 %>
+       <% var totalBal = 0 %>
        <% let owe = 0 %>
        <% foundItem.forEach(function(item){ %>
+       <% if(item.type === "debit"){ %>
           <% owe = owe + item.amount %>
-       <% }); %>
+        <% } else { %>
+          <% owe = owe - item.amount %>
+          <% } %>
+         <% }); %>
 
-         <div class="box">
-            <div class="welcome-space">
-               <span class="welcomeText">Welcome, <%= foundName %></span>
-               <span class="balanceText">Balance: $<%= owe.toFixed(2) %> </span>
-
-                 <% if(foundAmin || adminForm){ %>
-            <div class="adminUser">
-               <form action="/adminUser" method="POST">
-                  <select name="Accounts" class="accounts-dropdown" onchange="this.form.submit()">
-                     <option selected="true" disabled="disabled">Account</option>
-                     <% for(var y = 0; y < foundUsers.length; y++){ %>
-                     <option value=<%=foundUsers[y]._id%>><%=foundUsers[y].username%></option>
-                     <% } %>
-                  </select>
-               </form>
-            </div>
-            <% } %>
-            </div>
-
-            <% if(foundAmin){ %>
-            <div class="placeholder">
-              
-            </div>
-            <% } %>
-
-              <div class="row row-main" id="row-main">
-                 <div class="col col-main">Type:</div>
-                 <div class="col col-main">Memo:</div>
-                 <div class="col col-main">Amount:</div>
-                 <div class="col col-main">Balance:</div>
-              </div>
-              <form action="/deleteItem" method="POST">
-                 <% for(var i = 0; i < foundItem.length; i++){ %>
-                 <div class="row">
-                    <div class="col-sm-12 col-md-3 col-content">
-                       <details>
-                          <summary>
-                             <%= foundItem[i].type %> <i class="far fa-caret-square-down"></i>
-                          </summary>
-                          <%= foundItem[i].dateAdded.toDateString() %>
-                          <% if(foundAmin || adminForm){ %>
-                          <input type="checkbox" name="deleteItem" value=<%=foundItem[i]._id%>>
-                          <% } %>
-                       </details>
-                    </div>
-                    <div class="col-sm-12 col-md-3 col-content">
-                       <%= foundItem[i].memo %>
-                    </div>
-                    <div class="col-sm-12 col-md-3 col-content">
-                       <% if(foundItem[i].type === "debit"){ %>
-                       $<%= foundItem[i].amount %>
-                       <% } else { %>
-                       ($<%= foundItem[i].amount %>)
-                       <% } %>
-                    </div>
-                    <div class="col-sm-12 col-md-3 col-content">
-                       <% if(foundItem[i].type === "debit"){ %>
-                       <% totalBal = totalBal + foundItem[ i].amount %>
-                       $<%= totalBal.toFixed(2) %>
-                       <% } else { %>
-                       <% totalBal = totalBal - foundItem[i].amount %>
-                       $<%= totalBal.toFixed(2) %> 
-                       <% } %>
-                    </div>
-                 </div>
-               <% } %>
-               <input type="hidden" name="name" value=<%=foundId%>>
-               <% if(foundAmin || adminForm){ %>
-
-            <fieldset>
-              <legend>
-                Admin Tools
-              </legend>
-               <button class="delete-button">Delete Items</button>
-               <% } %>
+        <div class="box">
+    <div class="welcome-space">
+        <span class="welcomeText">Welcome,
+            <%= foundName %></span>
+        <span class="balanceText">Balance: $
+            <%= owe.toFixed(2) %> </span>
+        <% if(foundAmin || adminForm){ %>
+        <div class="adminUser">
+            <form action="/adminUser" method="POST">
+                <select name="Accounts" class="accounts-dropdown" onchange="this.form.submit()">
+                    <option selected="true" disabled="disabled">Account</option>
+                    <% for(var y = 0; y < foundUsers.length; y++){ %>
+                    <option value=<%=foundUsers[y]._id%>>
+                        <%=foundUsers[y].username%>
+                    </option>
+                    <% } %>
+                </select>
             </form>
-
-              <% if(foundAmin || adminForm){ %>
-            <div class="form-box">
-              <form action="/accountData" method="POST">
-                 <select name="type">
-                    <option value="debit">Debit</option>
-                    <option value="credit">Credit</option>
-                 </select>
-                 <input type="text" name="memo" id="memo" placeholder="name of transaction" autocomplete="off" required>
-                 <input type="number" name="amount" id="amount"  autocomplete="off" placeholder="charge amount" min="-10000.00" max="10000.00" step="0.01" required>
-                 <input type="hidden" name="UserId" value=<%= foundId._id %>>
-                 <input type="hidden" name="adminId" value=>
-                 <button class="addItem-button" type="submit">Submit</button>
-              </form>
+        </div>
+        <% } %>
+    </div>
+    <% if(foundAmin){ %>
+    <div class="placeholder">
+    </div>
+    <% } %>
+    <div class="row row-main" id="row-main">
+        <div class="col col-main">Type:</div>
+        <div class="col col-main">Memo:</div>
+        <div class="col col-main">Amount:</div>
+        <div class="col col-main">Balance:</div>
+    </div>
+    <form action="/deleteItem" method="POST">
+        <% for(var i = 0; i < foundItem.length; i++){ %>
+        <div class="row">
+            <div class="col-sm-12 col-md-3 col-content">
+                <details>
+                    <summary>
+                        <%= foundItem[i].type %> <i class="far fa-caret-square-down"></i>
+                    </summary>
+                    <%= foundItem[i].dateAdded.toDateString() %>
+                    <% if(foundAmin || adminForm){ %>
+                    <input type="checkbox" name="deleteItem" value=<%=foundItem[i]._id%>>
+                    <% } %>
+                </details>
             </div>
-
-              <div class="delete-box">
-                <form action="/deleteAccount" method="POST" id="deleteForm">
-                   <input type="hidden" id="delete1" name="delete" value=<%= foundId._id %>>
-                   <button type="submit" id="delete-account" onclick="return confirm('Are you sure you want to delete <%=foundName%> account?');">Delete Account</button>
-                </form>
-              </div>
-
-            <div class="admin-box">
-              <form action="/makeAdmin" method="POST">
-                  <p>Admin: <%= foundAmin %></p>
-                  <hr>
-                 <input type="checkbox" name="makeAdmin" value="true">Make Admin?<br>
-                 <input type="hidden" name="UserId" value=<%= foundId._id %>>
-                 <button type="submit">ADMIN</button>
-              </form>
-          </div>
+            <div class="col-sm-12 col-md-3 col-content">
+                <%= foundItem[i].memo %>
+            </div>
+            <div class="col-sm-12 col-md-3 col-content">
+                <% if(foundItem[i].type === "debit"){ %>
+                $
+                <%= foundItem[i].amount %>
+                <% } else { %>
+                ($
+                <%= foundItem[i].amount %>)
+                <% } %>
+            </div>
+            <div class="col-sm-12 col-md-3 col-content">
+                <% if(foundItem[i].type === "debit"){ %>
+                <% totalBal = totalBal + foundItem[ i].amount %>
+                $
+                <%= totalBal.toFixed(2) %>
+                <% } else { %>
+                <% totalBal = totalBal - foundItem[i].amount %>
+                $
+                <%= totalBal.toFixed(2) %>
+                <% } %>
+            </div>
+        </div>
+        <% } %>
+        <input type="hidden" name="name" value=<%=foundId%>>
+        <% if(foundAmin || adminForm){ %>
+        <fieldset>
+            <legend>
+                Admin Tools
+            </legend>
+            <button class="delete-button">Delete Items</button>
             <% } %>
-          </fieldset>
-         </div>
-   
-   <%-include("footer") -%>
+    </form>
+    <% if(foundAmin || adminForm){ %>
+    <div class="form-box">
+        <form action="/accountData" method="POST">
+            <select name="type">
+                <option value="debit">Debit</option>
+                <option value="credit">Credit</option>
+            </select>
+            <input type="text" name="memo" id="memo" placeholder="name of transaction" autocomplete="off" required>
+            <input type="number" name="amount" id="amount" autocomplete="off" placeholder="charge amount" min="-10000.00" max="10000.00" step="0.01" required>
+            <input type="hidden" name="UserId" value=<%=foundId._id %>>
+            <input type="hidden" name="adminId" value=>
+            <button class="addItem-button" type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="delete-box">
+        <form action="/deleteAccount" method="POST" id="deleteForm">
+            <input type="hidden" id="delete1" name="delete" value=<%=foundId._id %>>
+            <button type="submit" id="delete-account" onclick="return confirm('Are you sure you want to delete <%=foundName%> account?');">Delete Account</button>
+        </form>
+    </div>
+    <div class="admin-box">
+        <form action="/makeAdmin" method="POST">
+            <p>Admin:
+                <%= foundAmin %>
+            </p>
+            <hr>
+            <input type="checkbox" name="makeAdmin" value="true">Make Admin?<br>
+            <input type="hidden" name="UserId" value=<%=foundId._id %>>
+            <button type="submit">ADMIN</button>
+        </form>
+    </div>
+    <% } %>
+    </fieldset>
+</div>
+<%-include("footer") -%>
